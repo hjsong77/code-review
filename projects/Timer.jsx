@@ -8,17 +8,31 @@ class Timer extends Component {
     this.state = {
       date: moment()
     };
-    this.nTimer = setInterval(this.handleTick, 1000);
+
+    this.nTimer = setInterval(() => {
+      this.setState({ date: moment() });
+    }, 1000);
   }
-  handleTick = () => {
-    this.forceUpdate();
-  };
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      this.state.date.format("A hh:mm") === nextState.date.format("A hh:mm")
+    ) {
+      return false;
+    }
+    return true;
+  }
 
   render() {
+    const { expireDate } = this.props;
+    const { date } = this.state;
+    if (moment(expireDate) < date) {
+      return <div>종료되었습니다. </div>;
+    }
     return (
       <div>
-        <div>현재시간:{moment().format("YYYY-MM-DD A hh:mm:ss")}</div>
-        <div>{moment(this.props.expireDate).fromNow()} 강의 종료합니다. </div>
+        <div>현재시간:{date.format("A hh:mm")}</div>
+        <div>{moment(expireDate).fromNow()} 강의 종료합니다. </div>
       </div>
     );
   }
