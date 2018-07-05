@@ -6,35 +6,33 @@ class Header extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      isSpin: 1,
-      desSpin: "App-logo rotate",
-      comment: "Welcome to React"
+      isSpin: true
     };
   }
   handleClick = e => {
-    if (this.state.isSpin === 1) {
-      this.setState({ isSpin: 0 });
+    if (this.state.isSpin === true) {
+      this.setState({
+        isSpin: false
+      });
     } else {
-      this.setState({ isSpin: 1 });
+      this.setState({
+        isSpin: true
+      });
     }
   };
   render() {
-    if (this.state.isSpin === 1) {
-      this.setState({ desSpin: "App-logo rotate" });
-      this.setState({ comment: "Welcome to React" });
-    } else {
-      this.setState({ desSpin: "App-logo" });
-      this.setState({ comment: "Stop" });
-    }
     return (
       <div>
         <img
           onClick={this.handleClick}
           src={logo}
-          className={this.state.desSpin}
+          className={this.state.isSpin ? "App-logo rotate" : "App-logo"}
           alt="logo"
         />
-        <h1 className="App-title"> {this.state.comment}</h1>
+        <h1 className="App-title">
+          {" "}
+          {this.state.isSpin ? "Welcome to React" : "Stop"}
+        </h1>
       </div>
     );
   }
